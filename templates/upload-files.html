@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Geo Geo | Upload File</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/geo_geo.png' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{% static 'css/upload-files.css' %}">
+
+    <script src="{% static 'js/files.js' %}"> </script>
+</head>
+<body>
+
+
+    <div class="container">
+        <button class="back-btn" onclick="history.back()"> < Back</button>
+          <div class="card" id="card">
+            <h3>Upload Files</h3>
+            <div class="drop_box">
+              <header>
+                <h4>Select File here</h4>
+              </header>
+              <p>Files Supported: csv</p>
+                <form method="post" enctype="multipart/form-data" id="upload-file">
+                    {% csrf_token %}
+                     <label for="file-category" style="opacity:.7">Select File Type</label>
+                     <select name="file_type" id="file-category" style="opacity:.8" class="category">
+                        <option value selected>-------------</option>
+                        {% for data in options %}
+                            <option value="{{data}}">{{data}}</option>
+                        {% endfor %}
+                    </select>
+
+
+
+                <input type="file" required style="border:1px solid black;width:100%;" accept=".csv" class="btn" name="file">
+                <button class="upload-btn"  type="submit"> Upload </button>
+                </form>
+            </div>
+
+          </div>
+
+
+</div>
+<div class="footer"> <p> Developed by <span> Jahir Raihan Joy & cpi bug_rangers</span></p></div>
+</body>
+</html>

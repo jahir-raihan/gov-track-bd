@@ -1,0 +1,276 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/geo_geo.png' %}">
+    {% block cssfile %} {% endblock cssfile %}
+    <script src="{% static 'js/main.js' %}"></script>
+    <title>Geo Geo</title>
+
+
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="left">
+                <a href="/" style="color:black; ">
+                <div class="logo">
+
+
+                    <p>Geo_<span class="logo-spn">Geo</span></p>
+                </div>
+                </a>
+
+            </div>
+            <div class="right">
+
+               <div class="dashboard-link" onclick="show_dash_options()" id="dashboard-link" title="Admin Dashboard">
+                    <div class="ic">
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                    </div>
+                    <div class="ic">
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                    </div>
+                    <div class="ic">
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                    </div>
+
+
+               </div>
+
+               <div class="profile-toggle d-none" id="dashboard-toggle">
+                   <div class="arrow"></div>
+                <ul>
+
+                     <li>
+                         <a href="{% url 'admin-page' %}">
+                             <img src="{% static 'images/admin.png' %}" alt="Admin Icon">
+                             <a href="{% url 'admin-page' %}">Admin User</a>
+                         </a>
+                     </li>
+                    {% if request.user.is_MOP %}
+                         <li>
+                             <a href="{% url 'proposal_approval' %}">
+                                 <img src="{% static 'images/approve.png' %}" alt="Approve Icon">
+                                <a href="{% url 'proposal_approval' %}">Approval Section <span style="color:red"></span></a>
+                             </a>
+                         </li>
+
+                    {% else %}
+
+                        <li>
+                             <a href="{% url 'upload-details' %}">
+                                 <img src="{% static 'images/upload.png' %}" alt="Upload Icon">
+                                <a href="{% url 'upload-details' %}">Upload File <span style="color:red">(x)</span></a>
+                             </a>
+                         </li>
+                    {% endif %}
+<!--                    <li>-->
+<!--                         <a href="{% url 'download-proj-data' %}">-->
+<!--                             <img src="{% static 'images/upload.png' %}" alt="Upload Icon">-->
+<!--                            <a href="{% url 'download-proj-data' %}">Download data</a>-->
+<!--                         </a>-->
+<!--                     </li>-->
+
+
+                    <li>
+                         <a href="{% url 'logout' %}">
+                             <img src="{% static 'images/logout.png' %}" alt="Admin Icon">
+                             <a href="{% url 'logout' %}">Logout</a>
+                         </a>
+                     </li>
+
+
+
+                </ul>
+            </div>
+
+            </div>
+        </nav>
+    </header>
+
+{% block container %}
+    <div class="container">
+
+        {% csrf_token %}
+
+        <div class="section-details">
+
+            <div class="search-field">
+                <div class="s-c">
+                    <div class="s-f-header">
+                        Select Project
+                    </div>
+
+                    <label for="category" style="opacity:.7">Filter by Category</label>
+
+                    <select name="category" id="category" style="opacity:.8" onchange="filter_data()" class="category">
+                        <option value selected>-------------</option>
+                        {% for data in category %}
+                            <option value="{{data.id}}">{{data.agency_name}}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label for="category" style="margin-top:1.5em; opacity:.8">Filter by Time Range (opt)</label>
+                    <div class="filter-by-time-range">
+                        <label for="time-range-start">Start :</label>
+                         <select name="start_date" id="time-range-start" onchange="filter_data()" class="category s">
+                            <option value>-------------</option>
+                            {% for data in start_dates %}
+                                <option value="{{data}}">{{data}}</option>
+                            {% endfor %}
+                        </select>
+
+                        <label for="time-range-end">End :</label>
+                         <select name="end_date" id="time-range-end" onchange="filter_data()" class="category e">
+                            <option value>-------------</option>
+                            {% for data in end_dates %}
+                                <option value="{{data}}">{{data}}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+
+
+
+
+                    <form id="get-project-details" method="post">
+                        {% csrf_token %}
+
+                        <label id="b-csrf" for="project">Choose Project</label>
+                        <div id="s-proj">
+                            <select name="project" required id="id_project"  class="category">
+                                <option value>-------------</option>
+                                {% for data in details %}
+                                    <option value="{{data.id}}">{{data.project_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button class="btn" type="submit">Search</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="detail-field" id="detail-field" style="width:100%;">
+
+                <div class="loader d-none" id="loader"></div>
+                <p class="d-f-c-txt" id='d-f-c-txt'>After your search Details will appear here, and Geolocations will appear below.</p>
+                <div class="detail-box d-none" id="detail-box">
+                    <div class="report">
+                        <div class="blank"></div>
+                        <input type="hidden" id="issue-hidden-val">
+                        <input type="hidden" id="issue-hidden-id">
+                        <button onclick="on()">Feedback</button>
+                    </div>
+                    <div class="detail">
+                        <div class="d-1">
+                            <p class="d-title">Project Name : </p>
+                            <p id="project-name"></p>
+                        </div>
+<!--                        <div class="d-1">-->
+<!--                            <p class="d-title">Category : </p>-->
+<!--                            <p id="category-data"></p>-->
+<!--                        </div>-->
+                        <div class="d-1">
+                            <p class="d-title">Affiliated Agency : </p>
+                            <p id="affiliated-agency"></p>
+                        </div>
+                        <div class="d-1">
+                            <p class="d-title">Goal : </p>
+                            <p id="description"></p>
+                        </div>
+                        <div class="d-1">
+                            <p class="d-title">Start Time : </p>
+                            <p id="start-time"></p>
+                        </div>
+                        <div class="d-1">
+                            <p class="d-title">Estd Completion Time : </p>
+                            <p id="completion-time"></p>
+                        </div>
+                        <div class="d-1">
+                            <p class="d-title">Total Cost : </p>
+                            <p id="total-budget"></p>
+                        </div>
+                        <div class="d-1">
+                            <p class="d-title">Completion Percentage : </p>
+                            <p id="completion-percentage"></p>
+                        </div>
+                        <div class="d-1">
+                            <p class="d-title">Location : </p>
+                            <p id="time-remaining-percentage"></p>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="section-map" id="section-map">
+            <div id="empty"></div>
+
+        </div>
+        <div class="footer"> <p> Developed by <span> Jahir Raihan Joy & cpi bug_rangers</span></p></div>
+    </div>
+
+<div id="home-overlay" class="d-none">
+
+    <div class="s-c overlay-form" id="overlay-form">
+        <div class="cross" onclick="off()">X</div>
+        <div class="s-f-header" style="text-align:center;">
+            Report an Issue
+        </div>
+
+        <label style="margin-bottom:1em;"><b>Project Name:</b> <span id="issue-proj-title"></span></label>
+        <form id="issue-form" method="post">
+            {% csrf_token %}
+            <input name="issue" id="id_issue"  class="category" placeholder="Provide your feedback . . .">
+
+             <div class="rate">
+                <input type="radio"  id="star5" name="rate" value="5" />
+                <label for="star5" onclick="rate(5)" title="text">5 stars</label>
+                <input type="radio"  id="star4" name="rate" value="4" />
+                <label for="star4" onclick="rate(4)" title="text">4 stars</label>
+                <input type="radio"  id="star3" name="rate" value="3" />
+                <label for="star3" onclick="rate(3)" title="text">3 stars</label>
+                <input type="radio"  id="star2" name="rate" value="2" />
+                <label for="star2" onclick="rate(2)" title="text">2 stars</label>
+                <input type="radio"  id="star1" name="rate" value="1" />
+                <label for="star1" onclick="rate(1)" title="text">1 star</label>
+                 <input type="hidden" name="rating" id="rating">
+              </div>
+
+            <div>
+                <button class="btn" style="margin-top:2.8em;" type="submit">Submit</button>
+            </div>
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+{% endblock container %}
+
+
+</body>
+</html>
+

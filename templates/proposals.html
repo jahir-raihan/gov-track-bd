@@ -1,0 +1,185 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/geo_geo.png' %}">
+
+	<link rel="stylesheet" href="{% static 'css/login_register.css' %}">
+    <link rel="stylesheet" href="{% static 'css/proposals.css' %}">
+    <script src="{% static 'js/main.js' %}"></script>
+    <title>Geo Geo | Review Proposal</title>
+
+
+</head>
+
+<body>
+   <header>
+        <nav>
+            <div class="left">
+                <a href="/" style="color:black; ">
+                <div class="logo">
+
+
+                    <p>Geo_<span class="logo-spn">Geo</span></p>
+                </div>
+                </a>
+
+            </div>
+            <div class="right">
+
+               <div class="dashboard-link" onclick="show_dash_options()" id="dashboard-link" title="Admin Dashboard">
+                    <div class="ic">
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                    </div>
+                    <div class="ic">
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                    </div>
+                    <div class="ic">
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                    </div>
+
+
+               </div>
+
+               <div class="profile-toggle d-none" id="dashboard-toggle">
+                   <div class="arrow"></div>
+                <ul>
+
+                     <li>
+                         <a href="{% url 'admin-page' %}">
+                             <img src="{% static 'images/admin.png' %}" alt="Admin Icon">
+                             <a href="{% url 'admin-page' %}">Admin User</a>
+                         </a>
+                     </li>
+                    {% if request.user.is_MOP %}
+                        <li>
+                             <a href="{% url 'proposal_approval' %}">
+                                 <img src="{% static 'images/approve.png' %}" alt="Approve Icon">
+                                <a href="{% url 'proposal_approval' %}">Approval Section <span style="color:red"></span></a>
+                             </a>
+                         </li>
+
+                    {% else %}
+
+                        <li>
+                             <a href="{% url 'upload-details' %}">
+                                 <img src="{% static 'images/upload.png' %}" alt="Upload Icon">
+                                <a href="{% url 'upload-details' %}">Upload File <span style="color:red">(x)</span></a>
+                             </a>
+                         </li>
+                    {% endif %}
+
+
+                    <li>
+                         <a href="{% url 'logout' %}">
+                             <img src="{% static 'images/logout.png' %}" alt="Admin Icon">
+                             <a href="{% url 'logout' %}">Logout</a>
+                         </a>
+                     </li>
+
+
+
+                </ul>
+            </div>
+
+            </div>
+        </nav>
+    </header>
+	<div class="section-details">
+
+		<div class="search-field">
+            {% for prop in proposals %}
+                <div class="s-c proposal-list" id="proposal-list{{prop.id}}">
+                    <div class="prop-header">
+                        <p class="proposal-count">
+                            Proposal No : {{forloop.counter}}
+                        </p>
+                        <p class="p-time">
+                            {{prop.proposal_date |date:"d F, Y"}}
+                        </p>
+                    </div>
+                    <div class="prop-body">
+                       <div class="prop-title">
+                           <p class="span">Proposal title :</p>
+                           <p>{{prop.project_name}}</p>
+                       </div>
+                       <div class="location">
+                            <p class="span">Location : </p>
+                            <p>{{prop.location}}</p>
+                       </div>
+
+
+                        <div class="cost">
+                            <p class="span">Cost : </p>
+                            <p>{{prop.cost}}</p>
+                        </div>
+
+                        <div class="time-span">
+                            <p class="span">Time span : </p>
+                            <p>{{prop.timespan}}</p>
+                        </div>
+
+
+                       <div class="goal">
+                            <p class="span">Project goal : </p>
+                            <p>{{prop.goal}}</p>
+                       </div>
+                        <form name="accept-prop" id="accept-prop" >
+
+                         <div class="goal" style="margin-top:2em;">
+                            <p class="span">Add Custom Date : </p>
+                            <p><input class="category" style="width:40%;" type="date" name="date" id="date"></p>
+                       </div>
+
+                       <div class="reco-accept-delete">
+                            <div class="recco">
+                                <p class="span">Agency Allocated Projects : </p>
+                                <p class="r-c- r-c-d">{{prop.executing_agency.projects_running}}</p>
+                            </div>
+                           <input type="hidden" id="prop_id" value="{{prop.id}}">
+                            <div class="a-d-btns">
+
+                                {% csrf_token %}
+                                <button  class="btn btn-ac" type="submit">Accept</button>
+                            </form>
+                            <form name="dec-prop" id="dec-prop">
+                                {% csrf_token %}
+                                <button  class="btn btn-dec" type="submit">Decline</button>
+
+                            </form>
+
+
+
+
+                            </div>
+                       </div>
+
+
+
+                    </div>
+
+			    </div>
+            {% endfor %}
+
+
+		</div>
+
+
+
+	</div>
+
+</body>

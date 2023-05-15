@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)https://geo-geo.raihandev.com/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./Geo Geo_files/jquery.min.js.download"></script>
+    <script src="./Geo Geo_files/jquery.js.download"></script>
+    <link rel="stylesheet" href="./Geo Geo_files/jquery-ui.css">
+    <link rel="stylesheet" href="./Geo Geo_files/home.css">
+    <link rel="icon" type="image/x-icon" href="https://geo-geo.raihandev.com/static/images/geo_geo.png">
+     
+    <script src="./Geo Geo_files/main.js.download"></script>
+    <title>Geo Geo</title>
+
+
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="left">
+                <a href="https://geo-geo.raihandev.com/" style="color:black; ">
+                <div class="logo">
+
+
+                    <p>Geo_<span class="logo-spn">Geo</span></p>
+                </div>
+                </a>
+
+            </div>
+            <div class="right">
+
+               <div class="dashboard-link" onclick="show_dash_options()" id="dashboard-link" title="Admin Dashboard">
+                    <div class="ic">
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                    </div>
+                    <div class="ic">
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                    </div>
+                    <div class="ic">
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                    </div>
+
+
+               </div>
+
+               <div class="profile-toggle d-none" id="dashboard-toggle">
+                   <div class="arrow"></div>
+                <ul>
+
+                     <li>
+                         <a href="https://geo-geo.raihandev.com/admin-page/">
+                             <img src="./Geo Geo_files/admin.png" alt="Admin Icon">
+                             </a><a href="https://geo-geo.raihandev.com/admin-page/">Admin User</a>
+                         
+                     </li>
+                    <li>
+                         <a href="https://geo-geo.raihandev.com/upload-file/">
+                             <img src="./Geo Geo_files/upload.png" alt="Upload Icon">
+                            </a><a href="https://geo-geo.raihandev.com/upload-file/">Upload File <span style="color:red">(x)</span></a>
+                         
+                     </li>
+
+
+
+                </ul>
+            </div>
+
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="container">
+
+        <input type="hidden" name="csrfmiddlewaretoken" value="kXvQw3EeE3f0MeNmgCLOSe1VuPCbCeSmoCHMFS1GgDrw6F7hjJJQAbNhl127DppM">
+
+        <div class="section-details">
+
+            <div class="search-field">
+                <div class="s-c">
+                    <div class="s-f-header">
+                        Select Project
+                    </div>
+
+                    <label for="category" style="opacity:.7">Filter by Category</label>
+
+                    <select name="category" id="category" style="opacity:.8" onchange="filter_data()" class="category">
+                        <option value="" selected="">-------------</option>
+                        
+                            <option value="Education">Education</option>
+                        
+                            <option value="Health">Health</option>
+                        
+                            <option value="Governance">Governance</option>
+                        
+                            <option value="Energy and Mining">Energy and Mining</option>
+                        
+                    </select>
+
+                    <label for="category" style="margin-top:1.5em; opacity:.8">Filter by Time Range (opt)</label>
+                    <div class="filter-by-time-range">
+                        <label for="time-range-start">Start :</label>
+                         <select name="start_date" id="time-range-start" onchange="filter_data()" class="category s">
+                            <option value="">-------------</option>
+                            
+                                <option value="2006">2006</option>
+                            
+                                <option value="2011">2011</option>
+                            
+                                <option value="2014">2014</option>
+                            
+                                <option value="2016">2016</option>
+                            
+                                <option value="2017">2017</option>
+                            
+                                <option value="2019">2019</option>
+                            
+                                <option value="2020">2020</option>
+                            
+                                <option value="2021">2021</option>
+                            
+                                <option value="2022">2022</option>
+                            
+                        </select>
+
+                        <label for="time-range-end">End :</label>
+                         <select name="end_date" id="time-range-end" onchange="filter_data()" class="category e">
+                            <option value="">-------------</option>
+                            
+                                <option value="2010">2010</option>
+                            
+                                <option value="2016">2016</option>
+                            
+                                <option value="2018">2018</option>
+                            
+                                <option value="2021">2021</option>
+                            
+                                <option value="2022">2022</option>
+                            
+                                <option value="2023">2023</option>
+                            
+                                <option value="2024">2024</option>
+                            
+                                <option value="2026">2026</option>
+                            
+                        </select>
+
+                    </div>
+
+
+
+
+                    <form id="get-project-details" method="post">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="kXvQw3EeE3f0MeNmgCLOSe1VuPCbCeSmoCHMFS1GgDrw6F7hjJJQAbNhl127DppM">
+                        <label for="project">Choose Project</label>
+                        <div id="s-proj">
+                            <select name="project" required="" id="id_project" class="category">
+                                <option value="">-------------</option>
+                                
+                                    <option value="1">JICA Support Program 3 for Strengthening Mathematics and Science Education in Primary Education Project</option>
+                                
+                                    <option value="2">Project for Capacity Building of Nursing Services Phase 2</option>
+                                
+                                    <option value="3">The Project for Strengthening Health Systems through Organizing Communities</option>
+                                
+                                    <option value="4">Safe Motherhood Promotion Project</option>
+                                
+                                    <option value="5">Safe Motherhood Promotion Project Phase 2</option>
+                                
+                                    <option value="6">National Integrity Strategy Support Project Phase 2</option>
+                                
+                                    <option value="7">Project for Capacity Development of City Corporations (C4C)</option>
+                                
+                                    <option value="8">Strengthening Paurashava Governance Project (SPGP)</option>
+                                
+                                    <option value="9">Strengthening Public Investment Management System (SPIMS) Project Phase 2</option>
+                                
+                                    <option value="10">Upazila Integrated Capacity Development Project (UICDP)</option>
+                                
+                                    <option value="11">The Integrated Energy and Power Master Plan Project in Bangladesh</option>
+                                
+                                    <option value="12">The Project for Gas Network System Digitalization and Improvement of Operational Efficiency in Gas Sector in Bangladesh</option>
+                                
+                            </select>
+                        </div>
+                        <button class="btn" type="submit">Search</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="detail-field" id="detail-field" style="width:100%;">
+
+                <div class="loader d-none" id="loader"></div>
+                <p class="d-f-c-txt" id="d-f-c-txt">After your search Details will appear here, and Geolocations will appear below.</p>
+                <div class="detail-box d-none" id="detail-box">
+                    <div class="report">
+                        <div class="blank"></div>
+                        <input type="hidden" id="issue-hidden-val">
+                        <input type="hidden" id="issue-hidden-id">
+                        <button onclick="on()">Raise an Issue</button>
+                    </div>
+                    <div class="detail">
+                        <div class="d-1">
+                            <p class="d-title">Project Name : </p>
+                            <p id="project-name"></p>
+                        </div>
+                        <div class="d-1">
+                            <p class="d-title">Category : </p>
+                            <p id="category-data"></p>
+                        </div>
+                        <div class="d-1">
+                            <p class="d-title">Affiliated Agency : </p>
+                            <p id="affiliated-agency"></p>
+                        </div>
+                        <div class="d-1">
+                            <p class="d-title">Description : </p>
+                            <p id="description"></p>
+                        </div>
+                        <div class="d-1">
+                            <p class="d-title">Start Time : </p>
+                            <p id="start-time"></p>
+                        </div>
+                        <div class="d-1">
+                            <p class="d-title">Completion Time : </p>
+                            <p id="completion-time"></p>
+                        </div>
+                        <div class="d-1">
+                            <p class="d-title">Total Budget : </p>
+                            <p id="total-budget"></p>
+                        </div>
+                        <div class="d-1">
+                            <p class="d-title">Completion Percentage : </p>
+                            <p id="completion-percentage"></p>
+                        </div>
+                        <div class="d-1">
+                            <p class="d-title">Time Remaining  Percentage : </p>
+                            <p id="time-remaining-percentage"></p>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="section-map" id="section-map">
+            <div id="empty"></div>
+
+        </div>
+        <div class="footer"> <p> Developed by <span> Jahir Raihan Joy &amp; cpi bug_rangers</span></p></div>
+    </div>
+
+<div id="home-overlay" class="d-none">
+
+    <div class="s-c overlay-form" id="overlay-form">
+        <div class="cross" onclick="off()">X</div>
+        <div class="s-f-header" style="text-align:center;">
+            Report an Issue
+        </div>
+
+        <label style="margin-bottom:1em;"><b>Project Name:</b> <span id="issue-proj-title"></span></label>
+        <form id="issue-form" method="post">
+            <input type="hidden" name="csrfmiddlewaretoken" value="kXvQw3EeE3f0MeNmgCLOSe1VuPCbCeSmoCHMFS1GgDrw6F7hjJJQAbNhl127DppM">
+            <input name="issue" id="id_issue" class="category" placeholder="Describe Your Issue Or Report . . .">
+
+
+            <button class="btn" type="submit">Submit</button>
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+</body></html>

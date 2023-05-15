@@ -1,0 +1,23 @@
+.search-field{
+    width:fit-content;
+    margin:auto;
+}
+
+.section-details{
+    display:block;
+}
+
+a:hover{
+    border-bottom: 1px solid black;
+}
+
+.category{
+    border:1px solid black;
+}
+
+#id_user_role{
+  width:100%;
+  height:30px;
+  padding:0 1em;
+  border-radius: 4px;
+}

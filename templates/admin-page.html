@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/geo_geo.png' %}">
+    <link rel="stylesheet" href="{% static 'css/admin-page.css' %}">
+    <script src="{% static 'js/main.js' %}"></script>
+    <title>Geo Geo | Admin</title>
+
+
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="left">
+                <a href="/" style="color:black; ">
+                <div class="logo">
+
+
+                    <p>Geo_<span class="logo-spn">Geo</span></p>
+                </div>
+                </a>
+
+            </div>
+            <div class="right">
+
+               <div class="dashboard-link" onclick="show_dash_options()" id="dashboard-link" title="Admin Dashboard">
+                    <div class="ic">
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                    </div>
+                    <div class="ic">
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                    </div>
+                    <div class="ic">
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                        <div class="d-icon"></div>
+                    </div>
+
+
+               </div>
+
+               <div class="profile-toggle d-none" id="dashboard-toggle">
+                   <div class="arrow"></div>
+                <ul>
+
+                      <li>
+                         <a href="{% url 'admin-page' %}">
+                            <img src="{% static 'images/add_user.png' %}" alt="upload Icon">
+                             <a href="{% url 'register_other_users' %}">Create New User</a>
+                         </a>
+                     </li>
+                    <li>
+                         <a href="{% url 'upload-details' %}">
+                             <img src="{% static 'images/upload.png' %}" alt="upload Icon">
+                            <a href="{% url 'upload-details' %}">Upload File <span style="color:red">(x)</span></a>
+                         </a>
+                     </li>
+                    <li>
+                         <a href="{% url 'logout' %}">
+                             <img src="{% static 'images/logout.png' %}" alt="Admin Icon">
+                             <a href="{% url 'logout' %}">Logout</a>
+                         </a>
+                     </li>
+
+
+
+                </ul>
+            </div>
+
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="container">
+
+        {% csrf_token %}
+
+        <div class="section-details">
+
+            <div class="search-field search-field-admin">
+                <div class="s-c s-c-admin">
+                    <div class="s-f-header">
+                        Search & Filter Projects
+                    </div>
+
+                    <label >Filter by  Title or Agency</label>
+                    <form id="filter-by-admin-page" method="post">
+                        {% csrf_token %}
+                        <input name="keyword" id="keyword"  class="category" placeholder="Search by Title or Agency . . .">
+                        <div class="sort-by">
+                            <input type="checkbox" value="True" name="sort" id="sort-issue"><p style="font-size:14px;"> Sort by Issue Count</p>
+                        </div>
+
+                        <button class="btn" type="submit">Search</button>
+                    </form>
+
+
+                </div>
+
+            </div>
+
+            <div class="detail-field" id="detail-field">
+
+                <div class="loader d-none" id="loader"></div>
+                <p class="d-f-c-txt" id='d-f-c-txt'>After your search Details list will appear here, click them to view in map.</p>
+                <div class="detail-box d-none" id="detail-box">
+
+                    <div class="detail" id="detail">
+                        <div id="empty-a-det"></div>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="section-map" id="section-map">
+            <div id="empty"></div>
+        </div>
+        <div class="footer"> <p> Developed by <span> Jahir Raihan Joy & cpi bug_rangers</span></p></div>
+
+    </div>
+
+</body>
+</html>
+
